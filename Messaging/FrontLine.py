@@ -122,7 +122,8 @@ def sender():
                 if "code" not in results:
                     print(fmsg)
                     print('Message Sent!\n')
-                    outf = open("users/%s-reached-users.txt"%niche, "a")
+                    outf = open("%s/%s-reached-users.txt"%(DropboxFolder,niche), "a")
+                    time.sleep(5)
                     #outi = open('bot-users/%s-reached-users.txt' % email, 'a')
                     outf.write(usrid)
                     #outi.write(usrid)
@@ -168,14 +169,29 @@ def random_proxy(proxies):
 
 
 # collecting inputs:
+
+#type = input('(S)olo or (D)uo')    #for
+
+osystem = input('(W)indows Or (L)inux Or (M)ac: ')
+devicename = input('%s PC name: ')
+
 gender = input('do you want them (F)emale or (M)ale:  ')
 uaf = open('config/user-agents.txt', 'r').read().splitlines()
 messn = int(input('how many messages do you wanna send with each account:  '))
 col = int(input('how many minutes between every %s messages:  '%messn)) * 60
 niche = input('What niche will you use: ')
-
 times = int(input('how many times do you wanna repeat the messages:  '))
+entimes = times - 1
 cooldwn = int(input('How many minutes between each account:  ')) * 60
+
+# adding backround touches
+if osystem == 'W':
+    DropboxFolder = 'C:/Users/%s/Dropbox'%devicename
+elif osystem == 'L':
+    DropboxFolder = '/home/%s/Dropbox'%devicename
+if osystem == 'M':
+    DropboxFolder = '/Users/%s/Dropbox'%devicename
+
 
 #t_end = time.time() + 60 * period
 s_time = time.time()
@@ -296,13 +312,15 @@ for email in emaillist:
             blcktime = s_time - time.time()
             btime = blcktime / 60
             print('Account has been blocked after %s Minutes from Launch' % btime)
+            break
     accchk = getacc()
     if accchk is not False:
         cooldwnm = cooldwn / 60
         print('account done sleeping for %s minutes'%cooldwnm)
         time.sleep(cooldwn)
     else:
-        break
+        Repeat =+ 100
+        print('Previous account is blocked: %s'%email)
 
 
 
